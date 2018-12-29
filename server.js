@@ -1,10 +1,11 @@
 const http = require('http');
+const app = require('./backend/app');
 
-// (req,res) {} is the func that gets called whenerver the http server gets a request
-const server = http.createServer((req, res) => {
+const port = process.env.PORT || 3000;
 
-  res.end('This is my first response');
+// Set config for express
+app.set('port', port);
 
-});
+const server = http.createServer(app);
 
-server.listen(process.env.PORT || 3000);
+server.listen(port);
