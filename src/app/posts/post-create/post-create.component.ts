@@ -16,7 +16,7 @@ export class PostCreateComponent {
 
 
   onAddPost() {
-    const post: Post = { title: this.enteredTitle,
+    const post: Post = { id : null, title: this.enteredTitle,
       content : this.enteredContent};
     this.postsService.addPost(post.title, post.content);
   }
