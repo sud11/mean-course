@@ -1,8 +1,13 @@
-<mat-toolbar color="accent">
-  <mat-toolbar-row>
-    <!-- <mat-icon>favorite</mat-icon>
-    <mat-icon>delete</mat-icon> -->
-    <span> This is a toolbar</span>
-  </mat-toolbar-row>
+<mat-toolbar color="gray">
+  <span> 
+    <a routerLink="/"> My Messages </a>
+  </span>
 
+  <span class ="spacer"></span>
+  
+  <ul>
+    <li>
+      <a mat-button routerLink="/create" routerLinkActive="mat-accent"> New Post</a>
+    </li>
+  </ul>
 </mat-toolbar>

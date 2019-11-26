@@ -38,23 +38,33 @@ app.post( '/api/posts', (req, res, next) =>{
     title : req.body.title,
     content : req.body.content
   });
+  console.log("This is the post from the client");
+  console.log(post);
+  post.save().then( result => {
+    res.status(201).json( {
+      message : 'Post added successfully',
+      postId : result._id
+    });
+  }
+  );
 
-  post.save();
-
-  res.status(201).json( {
-    message : 'Post added successfully'
-  });
+  
 
 });
 
 app.get('/api/posts', (req, res, next) => {
-  Post.find().then( documents => {
-      res.status(200).json({
-        message : 'Posts fetched successfully',
+  Post.find().then(documents => {
+    console.log(documents)
+    
+    res.status(200).json(
+      {
+        message: 'Posts fetched successfully!',
         posts : documents
-      });
       }
-    );
+    
+    )
+  });
+  
 
 });
 
@@ -66,7 +76,6 @@ app.delete('/api/posts/:id', (req, res, next) => {
     console.log(result);
     res.status(200).json({ message : 'Post deleted!' });
   });
-
 
 })
 module.exports = app;

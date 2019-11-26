@@ -12,11 +12,6 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   posts: Post[] = [];
   private postsSub: Subscription;
-  // posts = [
-  //   { title: 'First Post', content: 'First post title' },
-  //   { title: 'Second Post' , content: 'Second post title' },
-  //   { title: 'Third Post' , content: 'Third post title' }
-  // ];
 
   constructor(public postsService: PostsService) {  }
 
@@ -36,6 +31,5 @@ export class PostListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.postsSub.unsubscribe();
   }
-
 
 }
