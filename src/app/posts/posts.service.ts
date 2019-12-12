@@ -4,9 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { stringify } from 'querystring';
+import { PostCreateComponent } from './post-create/post-create.component';
+import { PostListComponent } from './post-list/post-list.component';
 
 @Injectable({providedIn: 'root'})
 export class PostsService {
+
   // private posts so that it cannot be modified from outside
   private posts: Post[] = [];
   private postsUpdate = new  Subject<Post[]>();
@@ -29,6 +32,20 @@ export class PostsService {
         this.posts = transformedPosts;
         this.postsUpdate.next([...this.posts]);
     });
+  }
+  getPost(postId: String) {
+    console.log('inside getPost in posts.service');
+    console.log(postId);
+    // Return an observable. No need to subscribe here.
+    return this.http.get< { message: string, post: any}>('http://localhost:3000/api/posts/' + postId)
+    .pipe( map( (postData) => {
+      return {
+             title : postData.post.title,
+             content : postData.post.content,
+             id : postData.post._id
+      };
+    }));
+
   }
 
   getPostUpdateListener() {
@@ -54,5 +71,9 @@ export class PostsService {
     this.postsUpdate.next([...this.posts]);
     console.log('Deleted!');
     });
+  }
+
+  updatePost(post: Post) {
+    throw new Error('Method not implemented.');
   }
 }

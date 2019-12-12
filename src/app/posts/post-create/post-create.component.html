@@ -4,16 +4,17 @@
     <input matInput 
            type="Text" 
            name="title"
-           placeholder="Post Title *"
-           ngModel>
+           [(ngModel)]="post.title"
+           placeholder="Post Title *">
   </mat-form-field>
 
   <mat-form-field>
     <textarea matInput 
               rows=6
               name = "content"
+              [(ngModel)]="post.content"
               placeholder="Post Content*"
-              ngModel></textarea>
+              ></textarea>
 
   </mat-form-field>
   <br>
@@ -21,4 +22,3 @@
 </form>
 </mat-card>
 
-<!-- <p> {{ newPost }} </p> -->

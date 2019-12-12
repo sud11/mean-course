@@ -47,9 +47,6 @@ app.post( '/api/posts', (req, res, next) =>{
     });
   }
   );
-
-  
-
 });
 
 app.get('/api/posts', (req, res, next) => {
@@ -65,8 +62,20 @@ app.get('/api/posts', (req, res, next) => {
     )
   });
   
-
 });
+
+app.get('/api/posts/:id', (req, res, next) => {
+  console.log("Inside get. Params:")
+  console.log(req.params.id);
+  Post.findOne( {_id : req.params.id}).then( postFetched => {
+    console.log(postFetched);
+    res.status(200).json(
+      { message : 'Post fetched!',
+        post : postFetched
+     });
+  });
+
+})
 
 app.delete('/api/posts/:id', (req, res, next) => {
 
