@@ -45,7 +45,6 @@ export class PostsService {
              id : postData.post._id
       };
     }));
-
   }
 
   getPostUpdateListener() {
@@ -74,6 +73,10 @@ export class PostsService {
   }
 
   updatePost(post: Post) {
-    throw new Error('Method not implemented.');
+    console.log('in post service, updatepost' + post);
+    this.http.put < {message: string} >('http://localhost:3000/api/posts/' + post.id, post).subscribe( (responseData) => {
+      console.log(responseData);
+      // update locally
+   });
   }
 }

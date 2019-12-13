@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, OnInit, ViewChild } from '@angular/cor
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -18,13 +18,13 @@ export class PostCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      console.log('Inside AppCreateComponent!!');
-      console.log(params);
-      if (params['id'] === undefined) {
-        console.log('params is undefined');
+
+    this.route.paramMap.subscribe( (paramMap: ParamMap) => {
+      if(paramMap.has('postId')) {
+          this.onEditPost(paramMap.get('postId'));
+          this.mode = 'edit';
       } else {
-        this.onEditPost(params['id']);
+        this.mode = 'create';
       }
     });
   }
@@ -37,21 +37,26 @@ export class PostCreateComponent implements OnInit {
 
     myObservable.subscribe((responseData: Post) => {
       console.log('Response in front end');
+      console.log(responseData);
       this.post = responseData;
     });
   }
 
-  onAddPost(form: NgForm) {
+  onSavePost(form: NgForm) {
     console.log('onAddPost');
-    this.post = {
-      id : null,
-      title: form.value.title,
-      content : form.value.content};
-    if (this.mode === 'create'){
+    if (this.mode === 'create') {
+      this.post = {
+        id : null,
+        title: form.value.title,
+        content : form.value.content};
+
       this.postsService.addPost(this.post);
     } else {
-      this.postsService.updatePost(this.post);
-    }
+        this.post.title = form.value.title;
+        this.post.content = form.value.content;
+        this.postsService.updatePost(this.post);
+      }
+
     form.reset();
   }
 }
